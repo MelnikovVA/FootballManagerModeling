@@ -13,7 +13,7 @@ namespace FootballManagerModeling
         public List<int> TimeSinceAllEvents = new List<int> { 0, 0 };
         public List<int> TillNextEvent = new List<int> { 0, 0 };
         public List<int> Goals = new List<int> { 0, 0 };
-        public List<int> Gaves = new List<int> { 0, 0 };
+        public List<int> Saves = new List<int> { 0, 0 };
 
         public int Winner;
         public int Loser;
