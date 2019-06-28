@@ -24,5 +24,13 @@ namespace FootballManagerModeling
             this.GoalProtection = rand.Next(20, 35);
             this.ChanceOfSave = GoalProtection / 100;
         }
+
+        public bool TryToSave()
+        {
+            double randomSave = rand.NextDouble();
+            if (ChanceOfSave > randomSave)
+                return true;
+            return false;
+        }
     }
 }
