@@ -25,5 +25,13 @@ namespace FootballManagerModeling
             if (StrikePrecision < 0.5)
                 StrikePrecision += 0.5;
         }
+
+        public bool TryToStrike()
+        {
+            double randomStrike = rand.NextDouble();
+            if (StrikePrecision > randomStrike)
+                return true;
+            return false;
+        }
     }
 }
