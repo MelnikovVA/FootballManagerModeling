@@ -10,7 +10,7 @@ namespace FootballManagerModeling
         public IPlayer Player { get; set; }
         public string TeamName { get; set; }
 
-        Save(int time, string teamName, Goalkeeper goalkeeper)
+        public Save(int time, string teamName, Goalkeeper goalkeeper)
         {
             this.EventTime = time;
             this.Player = goalkeeper;
