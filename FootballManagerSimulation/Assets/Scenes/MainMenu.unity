@@ -3676,7 +3676,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 311267043}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1223539985}
+        m_MethodName: TrainTeam
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &311267043
@@ -8804,6 +8815,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Teams: []
+  ManagerFirstName: 
+  ManagerLastName: 
   PlayerTeamIndex: 0
   PlayerBalance: 15000
 --- !u!4 &826089092
@@ -12969,6 +12982,11 @@ MonoBehaviour:
   PanelStart: {fileID: 0}
   TeamDropdown: {fileID: 0}
   StartButton: {fileID: 0}
+  LabelValuesTraining: {fileID: 0}
+  ButtonTraining: {fileID: 0}
+  AvgAttackLabel: {fileID: 0}
+  AvgDefenseLabel: {fileID: 0}
+  PlayerBalance: {fileID: 0}
 --- !u!1 &1238229536
 GameObject:
   m_ObjectHideFlags: 0
@@ -14404,6 +14422,17 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1223539983}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -16962,7 +16991,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1223539985}
-        m_MethodName: OpenMainTab
+        m_MethodName: StartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

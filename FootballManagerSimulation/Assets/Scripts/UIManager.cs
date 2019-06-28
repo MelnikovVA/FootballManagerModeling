@@ -16,8 +16,15 @@ namespace FootballManagerModeling
         public TMP_InputField ManagerFirstNameInput;
         public TMP_InputField ManagerLastNameInput;
         public GameObject PanelStart;
-        public Dropdown TeamDropdown;
+        public TMP_Dropdown TeamDropdown;
         public Button StartButton;
+        #endregion
+        #region TrainingTabUIElements
+        public GameObject LabelValuesTraining;
+        public Button ButtonTraining;
+        public TextMeshProUGUI AvgAttackLabel;
+        public TextMeshProUGUI AvgDefenseLabel;
+        public TextMeshProUGUI PlayerBalance;
         #endregion
 
         private void Awake()
@@ -29,6 +36,7 @@ namespace FootballManagerModeling
         {
             AssignCanvasVariables();
             AssignStartTabElements();
+            AssignTrainingTabElements();
         }
 
         // Update is called once per frame
@@ -42,7 +50,8 @@ namespace FootballManagerModeling
             string playerFirstName = ManagerFirstNameInput.text;
             string playerLastName = ManagerLastNameInput.text;
             int chosenTeam = TeamDropdown.value;
-            //GameManager.GM.StartGame(playerFirstName, playerLastName, chosenTeam);
+            GameManager.GM.CreateTeams();
+            GameManager.GM.GetManagerInfo(playerFirstName, playerLastName, chosenTeam);
             OpenMainTab();
         }
 
@@ -76,6 +85,8 @@ namespace FootballManagerModeling
             MainMenuTab.gameObject.SetActive(false);
             TeamTab.gameObject.SetActive(false);
             ManagerTab.gameObject.SetActive(false);
+
+            UpdateTrainingTabLabels();
         }
         public void OpenTeamTab()
         {
@@ -113,10 +124,34 @@ namespace FootballManagerModeling
         {
             PanelStart = StartTab.transform.Find("PanelInfo").gameObject;
             StartButton = StartTab.transform.Find("ButtonStart").GetComponent<Button>();
+
             ManagerFirstNameInput = PanelStart.transform.Find("InputFirstName").GetComponent<TMP_InputField>();
             ManagerLastNameInput = PanelStart.transform.Find("InputLastName").GetComponent<TMP_InputField>();
-            TeamDropdown = PanelStart.transform.Find("Dropdown").GetComponent<Dropdown>();
+            TeamDropdown = PanelStart.transform.Find("Dropdown").GetComponent<TMP_Dropdown>();
+        }
+        void AssignTrainingTabElements()
+        {
+            LabelValuesTraining = TrainingTab.transform.Find("LabelValues").gameObject;
+
+            AvgAttackLabel = LabelValuesTraining.transform.Find("AvgAttack").GetComponent<TextMeshProUGUI>();
+            AvgDefenseLabel = LabelValuesTraining.transform.Find("AvgDefense").GetComponent<TextMeshProUGUI>();
+            PlayerBalance = LabelValuesTraining.transform.Find("PlayerBalance").GetComponent<TextMeshProUGUI>();
         }
         #endregion
+
+        #region Game events
+        public void TrainTeam()
+        {
+            GameManager.GM.TrainTeam();
+            UpdateTrainingTabLabels();
+        }
+        #endregion
+
+        public void UpdateTrainingTabLabels()
+        {
+            AvgAttackLabel.text = GameManager.GM.Teams[GameManager.GM.PlayerTeamIndex].LambdaAttack.ToString("F2");
+            AvgDefenseLabel.text = GameManager.GM.Teams[GameManager.GM.PlayerTeamIndex].LambdaDefense.ToString("F2");
+            PlayerBalance.text = GameManager.GM.PlayerBalance.ToString();
+        }
     }
 }
