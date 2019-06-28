@@ -19,6 +19,15 @@ namespace FootballManagerModeling
         public TMP_Dropdown TeamDropdown;
         public Button StartButton;
         #endregion
+        #region MainMenuTabUIElements
+        public GameObject ChampionshipPanelLeft;
+        public GameObject ChampionshipPanelRight;
+        public GameObject TeamsNames;
+        public GameObject TeamsGoals;
+        public GameObject Winners;
+
+        public List<string> TeamsNamesList = new List<string>();
+        #endregion
         #region TrainingTabUIElements
         public GameObject LabelValuesTraining;
         public Button ButtonTraining;
@@ -36,6 +45,7 @@ namespace FootballManagerModeling
         {
             AssignCanvasVariables();
             AssignStartTabElements();
+            AssignChampionshipTabElements();
             AssignTrainingTabElements();
         }
 
@@ -129,6 +139,19 @@ namespace FootballManagerModeling
             ManagerLastNameInput = PanelStart.transform.Find("InputLastName").GetComponent<TMP_InputField>();
             TeamDropdown = PanelStart.transform.Find("Dropdown").GetComponent<TMP_Dropdown>();
         }
+        void AssignChampionshipTabElements()
+        {
+            ChampionshipPanelLeft = MainMenuTab.transform.Find("PanelLeft").gameObject;
+            ChampionshipPanelRight = MainMenuTab.transform.Find("PanelRight").gameObject;
+
+            TeamsNames = ChampionshipPanelLeft.transform.Find("TeamsNames").gameObject;
+            TeamsGoals = ChampionshipPanelLeft.transform.Find("TeamsGoals").gameObject;
+
+            for (int i = 0; i < 24; i++)
+            {
+                TeamsNamesList.Add(TeamsNames.transform.Find("Team" + i).GetComponent<TextMeshProUGUI>().text);
+            }
+        }
         void AssignTrainingTabElements()
         {
             LabelValuesTraining = TrainingTab.transform.Find("LabelValues").gameObject;
@@ -140,10 +163,51 @@ namespace FootballManagerModeling
         #endregion
 
         #region Game events
+        void AddNewMatches(int currentMatchIndex)
+        {
+            switch (currentMatchIndex)
+            {
+                case 0:
+                    for (int i = 0; i < 8; i += 2)
+                    {
+                        GameManager.GM.Matches.Add(new Match(GameManager.GM.Teams.Find(x => x.Name == TeamsNamesList[i]),
+                            GameManager.GM.Teams.Find(x => x.Name == TeamsNamesList[i + 1])));
+                    }
+                    break;
+                case 4:
+                    for (int i = 8; i < 16; i += 2)
+                    {
+                        GameManager.GM.Matches.Add(new Match(GameManager.GM.Teams.Find(x => x.Name == TeamsNamesList[i]),
+                            GameManager.GM.Teams.Find(x => x.Name == TeamsNamesList[i + 1])));
+                    }
+                    break;
+                case 8:
+                    for (int i = 16; i < 22; i += 2)
+                    {
+                        GameManager.GM.Matches.Add(new Match(GameManager.GM.Teams.Find(x => x.Name == TeamsNamesList[i]),
+                            GameManager.GM.Teams.Find(x => x.Name == TeamsNamesList[i + 1])));
+                    }
+                    break;
+                case 11:
+                    GameManager.GM.Matches.Add(new Match(GameManager.GM.Teams.Find(x => x.Name == TeamsNamesList[22]),
+                            GameManager.GM.Teams.Find(x => x.Name == TeamsNamesList[23])));
+                    break;
+            }
+        }
         public void TrainTeam()
         {
             GameManager.GM.TrainTeam();
             UpdateTrainingTabLabels();
+        }  
+        public void PlayMatch()
+        {
+            int currentMatchIndex = GameManager.GM.MatchesPlayed;
+            if (currentMatchIndex == 0 || currentMatchIndex == 4 || currentMatchIndex == 8 || currentMatchIndex == 11)
+            {
+                AddNewMatches(currentMatchIndex);
+            }
+            
+
         }
         #endregion
 
