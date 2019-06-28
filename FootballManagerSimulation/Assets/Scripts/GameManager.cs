@@ -14,6 +14,10 @@ namespace FootballManagerModeling
 
         public List<FootballTeam> Teams = new List<FootballTeam>();
         public List<Match> Matches = new List<Match>();
+
+        public string ManagerFirstName;
+        public string ManagerLastName;
+
         public int PlayerTeamIndex;
         public int PlayerBalance = 15000;
 
@@ -32,6 +36,13 @@ namespace FootballManagerModeling
         void Update()
         {
 
+        }
+
+        void GetManagerInfo(string managerFirstName, string managerLastName, int chosenTeamIndex)
+        {
+            this.ManagerFirstName = managerFirstName;
+            this.ManagerLastName = managerLastName;
+            this.PlayerTeamIndex = chosenTeamIndex;
         }
 
         void CreateTeams()
