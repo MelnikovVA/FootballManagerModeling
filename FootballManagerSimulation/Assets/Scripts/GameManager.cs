@@ -18,6 +18,7 @@ namespace FootballManagerModeling
         public string ManagerFirstName;
         public string ManagerLastName;
 
+        public int MatchesPlayed;
         public int PlayerTeamIndex;
         public int PlayerBalance = 15000;
 
