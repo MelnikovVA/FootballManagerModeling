@@ -13,9 +13,10 @@ namespace FootballManagerModeling
         public Canvas StartTab, MainMenuTab, ChampionshipTab, TrainingTab, TeamTab, ManagerTab;
 
         #region StartTabUIElements
-        public TMP_InputField ManagerFirstName;
-        public TMP_InputField ManagerLastName;
-        public Dropdown CountryDropdown;
+        public TMP_InputField ManagerFirstNameInput;
+        public TMP_InputField ManagerLastNameInput;
+        public GameObject PanelStart;
+        public Dropdown TeamDropdown;
         public Button StartButton;
         #endregion
 
@@ -27,6 +28,7 @@ namespace FootballManagerModeling
         void Start()
         {
             AssignCanvasVariables();
+            AssignStartTabElements();
         }
 
         // Update is called once per frame
@@ -35,6 +37,13 @@ namespace FootballManagerModeling
 
         }
 
+        public void StartGame()
+        {
+            string playerFirstName = ManagerFirstNameInput.text;
+            string playerLastName = ManagerLastNameInput.text;
+            int chosenTeam = TeamDropdown.value;
+            //GameManager.GM.StartGame(playerFirstName, playerLastName, chosenTeam);
+        }
 
         //public void OpenTab(string TabName)
         //{
@@ -50,6 +59,14 @@ namespace FootballManagerModeling
             TrainingTab = transform.Find("TrainingTab").GetComponent<Canvas>();
             TeamTab = transform.Find("TeamTab").GetComponent<Canvas>();
             ManagerTab = transform.Find("ManagerTab").GetComponent<Canvas>();
+        }
+        void AssignStartTabElements()
+        {
+            PanelStart = StartTab.transform.Find("PanelInfo").GetComponent<GameObject>();
+            StartButton = StartTab.transform.Find("ButtonStart").GetComponent<Button>();
+            ManagerFirstNameInput = PanelStart.transform.Find("InputFirstName").GetComponent<TMP_InputField>();
+            ManagerLastNameInput = PanelStart.transform.Find("InputLastName").GetComponent<TMP_InputField>();
+            TeamDropdown = PanelStart.transform.Find("Dropdown").GetComponent<Dropdown>();
         }
         #endregion
     }
