@@ -18,6 +18,7 @@ namespace FootballManagerModeling
         public string ManagerFirstName;
         public string ManagerLastName;
 
+        public int MatchesPlayed;
         public int PlayerTeamIndex;
         public int PlayerBalance = 15000;
 
@@ -38,14 +39,15 @@ namespace FootballManagerModeling
 
         }
 
-        void GetManagerInfo(string managerFirstName, string managerLastName, int chosenTeamIndex)
+        public void GetManagerInfo(string managerFirstName, string managerLastName, int chosenTeamIndex)
         {
             this.ManagerFirstName = managerFirstName;
             this.ManagerLastName = managerLastName;
             this.PlayerTeamIndex = chosenTeamIndex;
+            Debug.Log(ManagerFirstName);
         }
 
-        void CreateTeams()
+        public void CreateTeams()
         {
             for (int i=0; i<8; i++)
             {
@@ -152,7 +154,7 @@ namespace FootballManagerModeling
         }
         #endregion
         #region Training the team
-        void TrainTeam()
+        public void TrainTeam()
         {
             if (PlayerBalance > 0)
             {
