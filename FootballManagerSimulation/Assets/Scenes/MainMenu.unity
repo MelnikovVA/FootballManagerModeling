@@ -12907,6 +12907,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1223539984}
+  - component: {fileID: 1223539985}
   m_Layer: 0
   m_Name: UITabs
   m_TagString: Untagged
@@ -12934,6 +12935,29 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1223539985
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1223539983}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a5697ac1cbd7d54b9431ac04b96ee4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartTab: {fileID: 0}
+  MainMenuTab: {fileID: 0}
+  ChampionshipTab: {fileID: 0}
+  TrainingTab: {fileID: 0}
+  TeamTab: {fileID: 0}
+  ManagerTab: {fileID: 0}
+  ManagerFirstNameInput: {fileID: 0}
+  ManagerLastNameInput: {fileID: 0}
+  PanelStart: {fileID: 0}
+  TeamDropdown: {fileID: 0}
+  StartButton: {fileID: 0}
 --- !u!1 &1238229536
 GameObject:
   m_ObjectHideFlags: 0
@@ -15545,7 +15569,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0, y: 45.5}
+  m_AnchoredPosition: {x: 0, y: 45.5}
   m_SizeDelta: {x: 204.7, y: 49.9}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1412147059
@@ -16881,7 +16905,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1598710979}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1223539985}
+        m_MethodName: OpenMainTab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1598710979

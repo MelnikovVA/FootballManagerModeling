@@ -43,12 +43,19 @@ namespace FootballManagerModeling
             string playerLastName = ManagerLastNameInput.text;
             int chosenTeam = TeamDropdown.value;
             //GameManager.GM.StartGame(playerFirstName, playerLastName, chosenTeam);
+            OpenMainTab();
         }
 
-        //public void OpenTab(string TabName)
-        //{
+        public void OpenMainTab()
+        {
+            MainMenuTab.gameObject.SetActive(true);
 
-        //}
+            StartTab.gameObject.SetActive(false);
+            ChampionshipTab.gameObject.SetActive(false);
+            TrainingTab.gameObject.SetActive(false);
+            TeamTab.gameObject.SetActive(false);
+            ManagerTab.gameObject.SetActive(false);
+        }
 
         #region UIInitialization
         void AssignCanvasVariables()
