@@ -8,11 +8,13 @@ namespace FootballManagerModeling
     {
         public int EventTime { get; set; }
         public IPlayer Player { get; set; }
+        public string TeamName { get; set; }
 
-        Save(int time, Goalkeeper goalkeeper)
+        Save(int time, string teamName, Goalkeeper goalkeeper)
         {
             this.EventTime = time;
             this.Player = goalkeeper;
+            this.TeamName = teamName;
         }
     }
 }

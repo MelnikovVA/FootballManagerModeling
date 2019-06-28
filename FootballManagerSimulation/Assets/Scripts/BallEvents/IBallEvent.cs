@@ -8,5 +8,6 @@ namespace FootballManagerModeling
     {
         int EventTime { get; set; }
         IPlayer Player { get; set; }
+        string TeamName { get; set; }
     }
 }

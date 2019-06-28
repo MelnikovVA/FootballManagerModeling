@@ -8,11 +8,13 @@ namespace FootballManagerModeling
     {
         public int EventTime { get; set; }
         public IPlayer Player { get; set; }
+        public string TeamName { get; set; }
 
-        Goal(int time, Forward forward)
+        Goal(int time, string teamName, Forward forward)
         {
             this.EventTime = time;
             this.Player = forward;
+            this.TeamName = teamName;
         }
     }
 }
