@@ -46,6 +46,7 @@ namespace FootballManagerModeling
             OpenMainTab();
         }
 
+        #region OpeningTabs
         public void OpenMainTab()
         {
             MainMenuTab.gameObject.SetActive(true);
@@ -56,6 +57,47 @@ namespace FootballManagerModeling
             TeamTab.gameObject.SetActive(false);
             ManagerTab.gameObject.SetActive(false);
         }
+        public void OpenChampionshipTab()
+        {
+            ChampionshipTab.gameObject.SetActive(true);
+
+            StartTab.gameObject.SetActive(false);
+            MainMenuTab.gameObject.SetActive(false);
+            TrainingTab.gameObject.SetActive(false);
+            TeamTab.gameObject.SetActive(false);
+            ManagerTab.gameObject.SetActive(false);
+        }
+        public void OpenTrainingTab()
+        {
+            TrainingTab.gameObject.SetActive(true);
+
+            StartTab.gameObject.SetActive(false);
+            ChampionshipTab.gameObject.SetActive(false);
+            MainMenuTab.gameObject.SetActive(false);
+            TeamTab.gameObject.SetActive(false);
+            ManagerTab.gameObject.SetActive(false);
+        }
+        public void OpenTeamTab()
+        {
+            TeamTab.gameObject.SetActive(true);
+
+            StartTab.gameObject.SetActive(false);
+            ChampionshipTab.gameObject.SetActive(false);
+            MainMenuTab.gameObject.SetActive(false);
+            TrainingTab.gameObject.SetActive(false);
+            ManagerTab.gameObject.SetActive(false);
+        }
+        public void OpenManagerTab()
+        {
+            ManagerTab.gameObject.SetActive(true);
+
+            StartTab.gameObject.SetActive(false);
+            ChampionshipTab.gameObject.SetActive(false);
+            MainMenuTab.gameObject.SetActive(false);
+            TrainingTab.gameObject.SetActive(false);
+            TeamTab.gameObject.SetActive(false);
+        }
+        #endregion
 
         #region UIInitialization
         void AssignCanvasVariables()
@@ -69,7 +111,7 @@ namespace FootballManagerModeling
         }
         void AssignStartTabElements()
         {
-            PanelStart = StartTab.transform.Find("PanelInfo").GetComponent<GameObject>();
+            PanelStart = StartTab.transform.Find("PanelInfo").gameObject;
             StartButton = StartTab.transform.Find("ButtonStart").GetComponent<Button>();
             ManagerFirstNameInput = PanelStart.transform.Find("InputFirstName").GetComponent<TMP_InputField>();
             ManagerLastNameInput = PanelStart.transform.Find("InputLastName").GetComponent<TMP_InputField>();

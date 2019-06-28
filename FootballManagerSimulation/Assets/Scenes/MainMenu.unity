@@ -1222,7 +1222,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 60447079}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1223539985}
+        m_MethodName: OpenMainTab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &60447079
@@ -2415,7 +2426,7 @@ GameObject:
   - component: {fileID: 216766892}
   - component: {fileID: 216766891}
   m_Layer: 0
-  m_Name: PanelForwards (1)
+  m_Name: PanelInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3229,7 +3240,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.35129175, y: 0.3056089}
   m_AnchorMax: {x: 0.6382915, y: 0.8853314}
-  m_AnchoredPosition: {x: 0.5, y: -110.92562}
+  m_AnchoredPosition: {x: 0.5, y: -110.92561}
   m_SizeDelta: {x: -257.4, y: -94.48001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &285227552
@@ -9002,7 +9013,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.029166667, y: 0.3056089}
   m_AnchorMax: {x: 0.3182084, y: 0.8853314}
-  m_AnchoredPosition: {x: 1.1999512, y: -110.92562}
+  m_AnchoredPosition: {x: 1.1999512, y: -110.92561}
   m_SizeDelta: {x: -261.4, y: -94.48001}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &844621063
@@ -10131,7 +10142,7 @@ RectTransform:
   - {fileID: 2090075063}
   - {fileID: 1693540050}
   m_Father: {fileID: 2032964489}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.55825, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -13309,7 +13320,7 @@ RectTransform:
   - {fileID: 36177250}
   - {fileID: 875640338}
   m_Father: {fileID: 2032964489}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.55825, y: 0.97700006}
@@ -14386,7 +14397,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1313390086}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1223539985}
+        m_MethodName: OpenTrainingTab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1313390086
@@ -15877,7 +15899,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1439383503}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1223539985}
+        m_MethodName: OpenManagerTab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1439383503
@@ -15998,7 +16031,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1462670557}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1223539985}
+        m_MethodName: OpenMainTab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1462670557
@@ -16120,7 +16164,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1474569662}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1223539985}
+        m_MethodName: OpenTeamTab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1474569662
@@ -17147,11 +17202,11 @@ RectTransform:
   m_Children:
   - {fileID: 396069865}
   m_Father: {fileID: 2032964489}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 879.9913, y: 355.09918}
+  m_AnchoredPosition: {x: 879.99, y: 402}
   m_SizeDelta: {x: 160, y: 65.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1657132747
@@ -17196,7 +17251,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1657132748}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1223539985}
+        m_MethodName: OpenMainTab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1657132748
@@ -19419,7 +19485,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1855274387}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1223539985}
+        m_MethodName: OpenMainTab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1855274387
@@ -19931,7 +20008,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1878424346}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1223539985}
+        m_MethodName: OpenChampionshipTab
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1878424346
@@ -21331,9 +21419,9 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
-  - {fileID: 1657132746}
   - {fileID: 1244200500}
   - {fileID: 926297376}
+  - {fileID: 1657132746}
   m_Father: {fileID: 1223539984}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
