@@ -44,8 +44,9 @@ namespace FootballManagerModeling
         #region Playing a match
         void PlayMatch(Match match)
         {
-            ModelEvent(0);
-            ModelEvent(1);
+            match.TillNextEvent[0] = ModelEvent(match.Teams[0].LambdaAttack, match.Teams[1].LambdaDefense);
+            match.TillNextEvent[1] = ModelEvent(match.Teams[1].LambdaAttack, match.Teams[0].LambdaDefense);
+
             for (int t = 0; t < 5400; t++)
             {
                 for (int i = 0; i < 2; i++)
@@ -54,14 +55,20 @@ namespace FootballManagerModeling
                     {
                         int randomForward = Rand.Next(0, 4);
                         if ((match.Teams[i].Players[randomForward] as Forward).TryToStrike() == true)
+                        {
                             if ((match.Teams[Math.Abs(i - 1)].Players[10] as Goalkeeper).TryToSave() == true)
+                            {
                                 match.Saves.Add(new Save(t, match.Teams[Math.Abs(i - 1)].Name,
                                     match.Teams[Math.Abs(i - 1)].Players[10] as Goalkeeper));
+                            }
                             else
+                            {
                                 match.Goals.Add(new Goal(t, match.Teams[i].Name,
                                     match.Teams[i].Players[randomForward] as Forward));
+                            }
+                        }
                         match.TimeSinceAllEvents[i] = t;
-                        ModelEvent(i);
+                        match.TillNextEvent[i] = ModelEvent(match.Teams[i].LambdaAttack, match.Teams[Math.Abs(i - 1)].LambdaDefense);
                     }
                 }
             }
@@ -114,6 +121,14 @@ namespace FootballManagerModeling
                     Teams.Find(x => x.Name == Teams[1].Name).MatchesWon++;
                 }
             }
+
+        }
+
+        int ModelEvent(double currentTeamAttackLambda, double oppositeTeamDefenseLambda)
+        {
+            double alpha = Rand.NextDouble();
+            int nextGoalTime = (int)((-Math.Log(alpha) / (currentTeamAttackLambda - oppositeTeamDefenseLambda)) * 23);
+            return nextGoalTime;
         }
         #endregion
     }
