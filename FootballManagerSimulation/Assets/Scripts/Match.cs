@@ -18,9 +18,7 @@ namespace FootballManagerModeling
         public int Winner;
         public int Loser;
         public int WinnerGoals;
-        public int WinnerSaves;
         public int LoserGoals;
-        public int LoserSaves;
 
         public Match(FootballTeam team1, FootballTeam team2)
         {
