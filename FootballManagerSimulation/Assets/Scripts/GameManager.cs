@@ -41,7 +41,14 @@ namespace FootballManagerModeling
         }
 
 
-        #region Playing a match
+        #region Creating and playing a match
+        void CreateMatch(string team1Name, string team2Name)
+        {
+            FootballTeam Team1 = Teams.Find(x => x.Name == team1Name);
+            FootballTeam Team2 = Teams.Find(x => x.Name == team2Name);
+            Matches.Add(new Match(Team1, Team2));
+        }
+
         void PlayMatch(Match match)
         {
             match.TillNextEvent[0] = ModelEvent(match.Teams[0].LambdaAttack, match.Teams[1].LambdaDefense);
