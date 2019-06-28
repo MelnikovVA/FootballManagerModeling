@@ -14,6 +14,8 @@ namespace FootballManagerModeling
 
         public List<FootballTeam> Teams = new List<FootballTeam>();
         public List<Match> Matches = new List<Match>();
+        public int PlayerTeamIndex;
+        public int PlayerBalance = 15000;
 
 
         private void Awake()
@@ -136,6 +138,44 @@ namespace FootballManagerModeling
             double alpha = Rand.NextDouble();
             int nextGoalTime = (int)((-Math.Log(alpha) / (currentTeamAttackLambda - oppositeTeamDefenseLambda)) * 23);
             return nextGoalTime;
+        }
+        #endregion
+        #region Training the team
+        void TrainTeam()
+        {
+            if (PlayerBalance > 0)
+            {
+                double averageAttack = 0;
+                double averageDefense = 0;
+                foreach (var player in Teams[PlayerTeamIndex].Players)
+                {
+                    if (player is Forward)
+                    {
+                        player.Attack += 2;
+                        player.Defense += 0.7;
+                        (player as Forward).StrikePrecision += 0.01;
+                    }
+                    if (player is Defender)
+                    {
+                        player.Attack += 0.5;
+                        player.Defense += 2;
+                    }
+                    if (player is Goalkeeper)
+                    {
+                        player.Attack += 0.2;
+                        (player as Goalkeeper).ChanceOfSave += 0.01;
+                    }
+                    averageAttack += player.Attack;
+                    averageDefense += player.Defense;
+                }
+                averageAttack /= 11;
+                averageDefense /= 11;
+
+                PlayerBalance -= 1000;
+                Teams[PlayerTeamIndex].LambdaAttack = averageAttack;
+                Teams[PlayerTeamIndex].LambdaDefense = averageDefense;
+                //Call the method for updating the TrainingTab UI here
+            }
         }
         #endregion
     }
