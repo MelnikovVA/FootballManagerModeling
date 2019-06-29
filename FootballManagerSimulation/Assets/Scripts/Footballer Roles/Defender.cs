@@ -11,7 +11,6 @@ namespace FootballManagerModeling
         public string Name { get; set; }
         public double Attack { get; set; }
         public double Defense { get; set; }
-        public double StrikePrecision;
 
         public Defender(string name)
         {
