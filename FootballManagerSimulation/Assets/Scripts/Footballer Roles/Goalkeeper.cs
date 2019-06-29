@@ -9,7 +9,6 @@ namespace FootballManagerModeling
     {
         public static System.Random rand = new System.Random();
         public string Name { get; set; }
-        public Role Role { get; set; }
         public double Attack { get; set; }
         public double Defense { get; set; }
         public double GoalProtection;
@@ -18,7 +17,6 @@ namespace FootballManagerModeling
         public Goalkeeper(string name)
         {
             this.Name = name;
-            this.Role = Role.Goalkeeper;
             this.Attack = rand.Next(0, 10);
             this.Defense = 0;
             this.GoalProtection = rand.Next(20, 35);
