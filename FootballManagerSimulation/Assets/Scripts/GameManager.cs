@@ -44,7 +44,6 @@ namespace FootballManagerModeling
             this.ManagerFirstName = managerFirstName;
             this.ManagerLastName = managerLastName;
             this.PlayerTeamIndex = chosenTeamIndex;
-            Debug.Log(ManagerFirstName);
         }
 
         public void CreateTeams()
