@@ -156,7 +156,7 @@ namespace FootballManagerModeling
         #region Training the team
         public void TrainTeam()
         {
-            if (PlayerBalance > 0)
+            if (PlayerBalance - 1000 > 0)
             {
                 double averageAttack = 0;
                 double averageDefense = 0;
@@ -187,7 +187,6 @@ namespace FootballManagerModeling
                 PlayerBalance -= 1000;
                 Teams[PlayerTeamIndex].LambdaAttack = averageAttack;
                 Teams[PlayerTeamIndex].LambdaDefense = averageDefense;
-                //Call the method for updating the TrainingTab UI here
             }
         }
         #endregion
