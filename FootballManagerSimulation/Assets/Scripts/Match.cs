@@ -15,8 +15,8 @@ namespace FootballManagerModeling
         public List<Goal> Goals = new List<Goal>();
         public List<Save> Saves = new List<Save>();
 
-        public int Winner;
-        public int Loser;
+        public string Winner;
+        public string Loser;
         public int WinnerGoals;
         public int LoserGoals;
 
