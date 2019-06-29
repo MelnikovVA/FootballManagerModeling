@@ -14,6 +14,11 @@ namespace FootballManagerModeling
 
         public List<FootballTeam> Teams = new List<FootballTeam>();
         public List<Match> Matches = new List<Match>();
+
+        public string ManagerFirstName;
+        public string ManagerLastName;
+
+        public int MatchesPlayed;
         public int PlayerTeamIndex;
         public int PlayerBalance = 15000;
 
@@ -34,7 +39,15 @@ namespace FootballManagerModeling
 
         }
 
-        void CreateTeams()
+        public void GetManagerInfo(string managerFirstName, string managerLastName, int chosenTeamIndex)
+        {
+            this.ManagerFirstName = managerFirstName;
+            this.ManagerLastName = managerLastName;
+            this.PlayerTeamIndex = chosenTeamIndex;
+            Debug.Log(ManagerFirstName);
+        }
+
+        public void CreateTeams()
         {
             for (int i=0; i<8; i++)
             {
@@ -44,14 +57,14 @@ namespace FootballManagerModeling
 
 
         #region Creating and playing a match
-        void CreateMatch(string team1Name, string team2Name)
+        public void CreateMatch(string team1Name, string team2Name)
         {
             FootballTeam Team1 = Teams.Find(x => x.Name == team1Name);
             FootballTeam Team2 = Teams.Find(x => x.Name == team2Name);
             Matches.Add(new Match(Team1, Team2));
         }
 
-        void PlayMatch(Match match)
+        public void PlayMatch(Match match)
         {
             match.TillNextEvent[0] = ModelEvent(match.Teams[0].LambdaAttack, match.Teams[1].LambdaDefense);
             match.TillNextEvent[1] = ModelEvent(match.Teams[1].LambdaAttack, match.Teams[0].LambdaDefense);
@@ -96,19 +109,19 @@ namespace FootballManagerModeling
 
             if (team0Goals > team1Goals)
             {
-                match.Winner = 0;
-                match.Loser = 1;
+                match.Winner = match.Teams[0].Name;
+                match.Loser = match.Teams[1].Name;
                 match.WinnerGoals = team0Goals;
                 match.LoserGoals = team1Goals;
-                Teams.Find(x => x.Name == Teams[0].Name).MatchesWon++;
+                Teams.Find(x => x.Name == match.Teams[0].Name).MatchesWon++;
             }
             else
             {
                 if (team0Goals == team1Goals)
                 {
                     int coinFlip = (int)(Rand.NextDouble() + 0.5);
-                    match.Winner = coinFlip;
-                    match.Loser = Math.Abs(coinFlip - 1);
+                    match.Winner = match.Teams[coinFlip].Name;
+                    match.Loser = match.Teams[Math.Abs(coinFlip - 1)].Name;
                     if (coinFlip == 1)
                     {
                         match.WinnerGoals = team1Goals;
@@ -119,18 +132,19 @@ namespace FootballManagerModeling
                         match.WinnerGoals = team0Goals;
                         match.LoserGoals = team1Goals;
                     }
-                    Teams.Find(x => x.Name == Teams[coinFlip].Name).MatchesWon++;
+                    Teams.Find(x => x.Name == match.Teams[coinFlip].Name).MatchesWon++;
                 }
                 else
                 {
-                    match.Winner = 1;
-                    match.Loser = 0;
+                    match.Winner = match.Teams[1].Name;
+                    match.Loser = match.Teams[0].Name;
                     match.WinnerGoals = team1Goals;
                     match.LoserGoals = team0Goals;
-                    Teams.Find(x => x.Name == Teams[1].Name).MatchesWon++;
+                    Teams.Find(x => x.Name == match.Teams[1].Name).MatchesWon++;
                 }
             }
 
+            MatchesPlayed++;
         }
 
         int ModelEvent(double currentTeamAttackLambda, double oppositeTeamDefenseLambda)
@@ -141,7 +155,7 @@ namespace FootballManagerModeling
         }
         #endregion
         #region Training the team
-        void TrainTeam()
+        public void TrainTeam()
         {
             if (PlayerBalance > 0)
             {

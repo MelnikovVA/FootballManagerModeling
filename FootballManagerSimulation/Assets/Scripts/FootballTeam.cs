@@ -57,6 +57,7 @@ namespace FootballManagerModeling
                     PlayersNames = DataProvider.PlayersSpain;
                     break;
             }
+            AddPlayers();
         }
         public void AddPlayers()
         {
