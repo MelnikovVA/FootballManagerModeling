@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -19,12 +20,21 @@ namespace FootballManagerModeling
         public TMP_Dropdown TeamDropdown;
         public Button StartButton;
         #endregion
-        #region MainMenuTabUIElements
+        #region ChampionshipTabUIElements
         public GameObject ChampionshipPanelLeft;
         public GameObject ChampionshipPanelRight;
+        public GameObject ChampionshipPanelStats;
+        public GameObject ChampionshipLabelStatsScores;
         public GameObject TeamsNames;
         public GameObject TeamsGoals;
         public GameObject Winners;
+
+        public TextMeshProUGUI PlayerTeamName;
+        public TextMeshProUGUI MatchesWon;
+        public TextMeshProUGUI GoalsScored;
+        public TextMeshProUGUI Saves;
+        //public TextMeshProUGUI BestAttacker;
+        //public TextMeshProUGUI FastestGoal;
 
         public List<string> TeamsNamesList = new List<string>();
         #endregion
@@ -45,8 +55,6 @@ namespace FootballManagerModeling
         {
             AssignCanvasVariables();
             AssignStartTabElements();
-            AssignChampionshipTabElements();
-            AssignTrainingTabElements();
         }
 
         // Update is called once per frame
@@ -62,6 +70,10 @@ namespace FootballManagerModeling
             int chosenTeam = TeamDropdown.value;
             GameManager.GM.CreateTeams();
             GameManager.GM.GetManagerInfo(playerFirstName, playerLastName, chosenTeam);
+
+            AssignChampionshipTabElements();
+            AssignTrainingTabElements();
+
             OpenMainTab();
         }
 
@@ -141,16 +153,31 @@ namespace FootballManagerModeling
         }
         void AssignChampionshipTabElements()
         {
-            ChampionshipPanelLeft = MainMenuTab.transform.Find("PanelLeft").gameObject;
-            ChampionshipPanelRight = MainMenuTab.transform.Find("PanelRight").gameObject;
+            //Left side
+            ChampionshipPanelLeft = ChampionshipTab.transform.Find("PanelLeft").gameObject;
+            ChampionshipPanelRight = ChampionshipTab.transform.Find("PanelRight").gameObject;
 
             TeamsNames = ChampionshipPanelLeft.transform.Find("TeamsNames").gameObject;
             TeamsGoals = ChampionshipPanelLeft.transform.Find("TeamsGoals").gameObject;
+            Winners = ChampionshipPanelLeft.transform.Find("Winners").gameObject;
 
             for (int i = 0; i < 24; i++)
             {
                 TeamsNamesList.Add(TeamsNames.transform.Find("Team" + i).GetComponent<TextMeshProUGUI>().text);
             }
+
+            //Right side
+            PlayerTeamName = ChampionshipPanelRight.transform.Find("LabelPlayerTeamName").GetComponent<TextMeshProUGUI>();
+            PlayerTeamName.text = "Your team: " + GameManager.GM.Teams[GameManager.GM.PlayerTeamIndex].Name;
+
+            ChampionshipPanelStats = ChampionshipPanelRight.transform.Find("PanelStats").gameObject;
+            ChampionshipLabelStatsScores = ChampionshipPanelStats.transform.Find("LabelStatsScores").gameObject;
+
+            MatchesWon = ChampionshipLabelStatsScores.transform.Find("MatchesWon").GetComponent<TextMeshProUGUI>();
+            GoalsScored = ChampionshipLabelStatsScores.transform.Find("GoalsScored").GetComponent<TextMeshProUGUI>();
+            Saves = ChampionshipLabelStatsScores.transform.Find("Saves").GetComponent<TextMeshProUGUI>();
+            //BestAttacker = ChampionshipLabelStatsScores.transform.Find("BestAttacker").GetComponent<TextMeshProUGUI>();
+            //FastestGoal = ChampionshipLabelStatsScores.transform.Find("FastestGoal").GetComponent<TextMeshProUGUI>();
         }
         void AssignTrainingTabElements()
         {
@@ -170,35 +197,27 @@ namespace FootballManagerModeling
                 case 0:
                     for (int i = 0; i < 8; i += 2)
                     {
-                        GameManager.GM.Matches.Add(new Match(GameManager.GM.Teams.Find(x => x.Name == TeamsNamesList[i]),
-                            GameManager.GM.Teams.Find(x => x.Name == TeamsNamesList[i + 1])));
+                        GameManager.GM.CreateMatch(TeamsNamesList[i], TeamsNamesList[i + 1]);
                     }
                     break;
                 case 4:
                     for (int i = 8; i < 16; i += 2)
                     {
-                        GameManager.GM.Matches.Add(new Match(GameManager.GM.Teams.Find(x => x.Name == TeamsNamesList[i]),
-                            GameManager.GM.Teams.Find(x => x.Name == TeamsNamesList[i + 1])));
+                        GameManager.GM.CreateMatch(TeamsNamesList[i], TeamsNamesList[i + 1]);
+
                     }
                     break;
                 case 8:
                     for (int i = 16; i < 22; i += 2)
                     {
-                        GameManager.GM.Matches.Add(new Match(GameManager.GM.Teams.Find(x => x.Name == TeamsNamesList[i]),
-                            GameManager.GM.Teams.Find(x => x.Name == TeamsNamesList[i + 1])));
+                        GameManager.GM.CreateMatch(TeamsNamesList[i], TeamsNamesList[i + 1]);
                     }
                     break;
                 case 11:
-                    GameManager.GM.Matches.Add(new Match(GameManager.GM.Teams.Find(x => x.Name == TeamsNamesList[22]),
-                            GameManager.GM.Teams.Find(x => x.Name == TeamsNamesList[23])));
+                    GameManager.GM.CreateMatch(TeamsNamesList[22], TeamsNamesList[23]);
                     break;
             }
         }
-        public void TrainTeam()
-        {
-            GameManager.GM.TrainTeam();
-            UpdateTrainingTabLabels();
-        }  
         public void PlayMatch()
         {
             int currentMatchIndex = GameManager.GM.MatchesPlayed;
@@ -206,8 +225,128 @@ namespace FootballManagerModeling
             {
                 AddNewMatches(currentMatchIndex);
             }
-            
+            GameManager.GM.PlayMatch(GameManager.GM.Matches[currentMatchIndex]);
 
+            UpdateChampionshipBracket(currentMatchIndex);
+            UpdateChampionshipPlayerTeamTab();
+        }
+        void UpdateChampionshipBracket(int lastMatchIndex)
+        {
+            switch (lastMatchIndex)
+            {
+                case 0:
+                    TeamsGoals.transform.Find("MatchScore" + 0).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[0]).Count().ToString();
+                    TeamsGoals.transform.Find("MatchScore" + 1).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[1]).Count().ToString();
+                    TeamsNames.transform.Find("Team" + 8).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Loser;
+                    TeamsNames.transform.Find("Team" + 12).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Winner;
+                    TeamsNamesList[8] = GameManager.GM.Matches[lastMatchIndex].Loser;
+                    TeamsNamesList[12] = GameManager.GM.Matches[lastMatchIndex].Winner;
+                    break;
+                case 1:
+                    TeamsGoals.transform.Find("MatchScore" + 2).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[2]).Count().ToString();
+                    TeamsGoals.transform.Find("MatchScore" + 3).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[3]).Count().ToString();
+                    TeamsNames.transform.Find("Team" + 9).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Loser;
+                    TeamsNames.transform.Find("Team" + 13).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Winner;
+                    TeamsNamesList[9] = GameManager.GM.Matches[lastMatchIndex].Loser;
+                    TeamsNamesList[13] = GameManager.GM.Matches[lastMatchIndex].Winner;
+                    break;
+                case 2:
+                    TeamsGoals.transform.Find("MatchScore" + 4).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[4]).Count().ToString();
+                    TeamsGoals.transform.Find("MatchScore" + 5).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[5]).Count().ToString();
+                    TeamsNames.transform.Find("Team" + 10).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Loser;
+                    TeamsNames.transform.Find("Team" + 14).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Winner;
+                    TeamsNamesList[10] = GameManager.GM.Matches[lastMatchIndex].Loser;
+                    TeamsNamesList[14] = GameManager.GM.Matches[lastMatchIndex].Winner;
+                    break;
+                case 3:
+                    TeamsGoals.transform.Find("MatchScore" + 6).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[6]).Count().ToString();
+                    TeamsGoals.transform.Find("MatchScore" + 7).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[7]).Count().ToString();
+                    TeamsNames.transform.Find("Team" + 11).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Loser;
+                    TeamsNames.transform.Find("Team" + 15).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Winner;
+                    TeamsNamesList[11] = GameManager.GM.Matches[lastMatchIndex].Loser;
+                    TeamsNamesList[15] = GameManager.GM.Matches[lastMatchIndex].Winner;
+                    break;
+                case 4:
+                    TeamsGoals.transform.Find("MatchScore" + 8).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[8]).Count().ToString();
+                    TeamsGoals.transform.Find("MatchScore" + 9).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[9]).Count().ToString();
+                    TeamsNames.transform.Find("Team" + 16).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Winner;
+                    TeamsNamesList[16] = GameManager.GM.Matches[lastMatchIndex].Winner;
+                    break;
+                case 5:
+                    TeamsGoals.transform.Find("MatchScore" + 10).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[10]).Count().ToString();
+                    TeamsGoals.transform.Find("MatchScore" + 11).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[11]).Count().ToString();
+                    TeamsNames.transform.Find("Team" + 18).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Winner;
+                    TeamsNamesList[18] = GameManager.GM.Matches[lastMatchIndex].Winner;
+                    break;
+                case 6:
+                    TeamsGoals.transform.Find("MatchScore" + 12).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[12]).Count().ToString();
+                    TeamsGoals.transform.Find("MatchScore" + 13).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[13]).Count().ToString();
+                    TeamsNames.transform.Find("Team" + 17).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Loser;
+                    TeamsNames.transform.Find("Team" + 20).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Winner;
+                    TeamsNamesList[17] = GameManager.GM.Matches[lastMatchIndex].Loser;
+                    TeamsNamesList[20] = GameManager.GM.Matches[lastMatchIndex].Winner;
+                    break;
+                case 7:
+                    TeamsGoals.transform.Find("MatchScore" + 14).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[14]).Count().ToString();
+                    TeamsGoals.transform.Find("MatchScore" + 15).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[15]).Count().ToString();
+                    TeamsNames.transform.Find("Team" + 19).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Loser;
+                    TeamsNames.transform.Find("Team" + 21).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Winner;
+                    TeamsNamesList[19] = GameManager.GM.Matches[lastMatchIndex].Loser;
+                    TeamsNamesList[21] = GameManager.GM.Matches[lastMatchIndex].Winner;
+                    break;
+                case 8:
+                    TeamsGoals.transform.Find("MatchScore" + 16).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[16]).Count().ToString();
+                    TeamsGoals.transform.Find("MatchScore" + 17).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[17]).Count().ToString();
+                    TeamsNames.transform.Find("Team" + 22).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Winner;
+                    TeamsNamesList[22] = GameManager.GM.Matches[lastMatchIndex].Winner;
+                    break;
+                case 9:
+                    TeamsGoals.transform.Find("MatchScore" + 18).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[18]).Count().ToString();
+                    TeamsGoals.transform.Find("MatchScore" + 19).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[19]).Count().ToString();
+                    TeamsNames.transform.Find("Team" + 23).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Winner;
+                    TeamsNamesList[23] = GameManager.GM.Matches[lastMatchIndex].Winner;
+                    break;
+                case 10:
+                    TeamsGoals.transform.Find("MatchScore" + 20).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[20]).Count().ToString();
+                    TeamsGoals.transform.Find("MatchScore" + 21).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[21]).Count().ToString();
+                    if (GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[20]).Count() > GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[21]).Count())
+                    {
+                        Winners.transform.Find("1st").GetComponent<TextMeshProUGUI>().text = "1st place!";
+                        Winners.transform.Find("2nd").GetComponent<TextMeshProUGUI>().text = "2nd place";
+                    }
+                    else
+                    {
+                        Winners.transform.Find("2nd").GetComponent<TextMeshProUGUI>().text = "1st place!";
+                        Winners.transform.Find("1st").GetComponent<TextMeshProUGUI>().text = "2nd place";
+                    }
+                    break;
+                case 11:
+                    TeamsGoals.transform.Find("MatchScore" + 22).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[22]).Count().ToString();
+                    TeamsGoals.transform.Find("MatchScore" + 23).GetComponent<TextMeshProUGUI>().text = GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[23]).Count().ToString();
+                    if (GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[22]).Count() > GameManager.GM.Matches[lastMatchIndex].Goals.Where(x => x.TeamName == TeamsNamesList[23]).Count())
+                    {
+                        Winners.transform.Find("3rd").GetComponent<TextMeshProUGUI>().text = "3rd place";
+                        Winners.transform.Find("4th").GetComponent<TextMeshProUGUI>().text = "4th place";
+                    }
+                    else
+                    {
+                        Winners.transform.Find("3rd").GetComponent<TextMeshProUGUI>().text = "4th place";
+                        Winners.transform.Find("4th").GetComponent<TextMeshProUGUI>().text = "3rd place";
+                    }
+                    break;
+            }
+        }
+        void UpdateChampionshipPlayerTeamTab()
+        {
+            MatchesWon.text = GameManager.GM.Teams[GameManager.GM.PlayerTeamIndex].MatchesWon.ToString();
+            GoalsScored.text = GameManager.GM.Teams[GameManager.GM.PlayerTeamIndex].GoalsScored.ToString();
+            Saves.text = GameManager.GM.Teams[GameManager.GM.PlayerTeamIndex].Saves.ToString();
+        }
+
+        public void TrainTeam()
+        {
+            GameManager.GM.TrainTeam();
+            UpdateTrainingTabLabels();
         }
         #endregion
 
